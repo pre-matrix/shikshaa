@@ -1,0 +1,13 @@
+{
+  "user": [
+    {
+      "id": "premk",
+      "name": "prem",
+      "password": "prem",
+      "email": "p@g.com",
+      "gender": "male",
+      "role": "",
+      "isactive": false
+    }
+  ]
+}

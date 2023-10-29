@@ -1,0 +1,69 @@
+.main {
+    width: 99vw;
+    height: 98.5vh;
+    margin: 0;
+    background: black;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .container {
+    width: 99vw;
+    height: 98vh;
+    background-image: url('/assets/galaxy_bigstar.png');
+    background-size: 10%;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 50%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    
+  }
+  
+  canvas {
+    position: absolute;
+    top:0;
+    left:0;
+    z-index: -1;
+    
+    
+  }
+  .text-box {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content:flex-end;
+    align-items:center;
+    opacity: 100%;
+    font-size: 60px;
+    font-family: 'Raleway', sans-serif;
+    letter-spacing: 7px;
+    word-spacing: 12px;
+    text-transform: uppercase;
+    color:rgb(238, 238, 238);
+    -webkit-text-fill-color:color-mix(in srgb-linear, #a70c0c percentage, #f30ad800 percentage);
+    -webkit-text-stroke-width: 2px;
+  }
+  .button-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    flex-direction: row;
+  }
+  .button {
+    display: inline-block;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 15px;
+    margin-left:20px;
+    margin-right:20px;
+    word-spacing: normal;
+    letter-spacing: 5px;
+    border: 1px solid white;
+    background: black;
+    cursor: pointer;
+  }
