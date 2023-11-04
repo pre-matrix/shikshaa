@@ -86,7 +86,7 @@ export class UpdatepopupComponent implements OnInit {
 
         })
         .catch((error) => {
-          console.error("Error updating data: ", error);
+          this.toastr.error("Error updating data: ", error);
           // Handle the error as needed
         });
     } else {

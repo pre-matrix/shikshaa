@@ -36,6 +36,7 @@ import { MyComponentComponent } from './my-component/my-component.component';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    
     MaterialModule,
     ReactiveFormsModule,
     HttpClientModule,

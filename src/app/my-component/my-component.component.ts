@@ -1,5 +1,6 @@
 import { Component, NgZone, OnInit, Renderer2, ElementRef, AfterViewInit } from '@angular/core';
 import * as THREE from 'three';
+import { WebGLRenderer, Scene, PerspectiveCamera, BoxGeometry, MeshBasicMaterial, Mesh, EdgesGeometry, LineBasicMaterial, LineSegments } from 'three';
 
 @Component({
   selector: 'app-my-component',
@@ -37,12 +38,41 @@ export class MyComponentComponent implements OnInit, AfterViewInit {
     container.appendChild(this.renderer.domElement);
     
     const geometry = new THREE.BoxGeometry();
-    const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+    const material = new THREE.MeshBasicMaterial({ color: 0xfff, transparent: true, opacity: 0.1 });
     this.cube = new THREE.Mesh(geometry, material);
     this.scene.add(this.cube);
 
+    // Create the edges for the cube
+    const edgesMaterials = [
+      new THREE.LineBasicMaterial({ color: 0xffff00, transparent: true, opacity: 0.1 }),  // Black
+      new THREE.LineBasicMaterial({ color: 0xff0000, transparent: true, opacity: 0.1 }),  // Red
+      new THREE.LineBasicMaterial({ color: 0x00ff00, transparent: true, opacity: 0.1 }),  // Green
+      new THREE.LineBasicMaterial({ color: 0x0000ff }),  // Blue
+      new THREE.LineBasicMaterial({ color: 0xffff00, transparent: true, opacity: 0.1 })   // Yellow
+    ];
+  
+    // Create an array to hold the separate edge sets
+    const edgesSets = [];
+
+    const edgesGeometry = new THREE.EdgesGeometry(geometry);
+  
+    // Create and position each set of edges
+    for (let i = 0; i < edgesMaterials.length; i++) {
+      const edges = new THREE.LineSegments(edgesGeometry, edgesMaterials[i]);
+      edges.position.copy(this.cube.position);
+      edgesSets.push(edges);
+    }
+  
+    // Add the edge sets to the cube
+    for (const edges of edgesSets) {
+      this.cube.add(edges);
+    }
+  
     this.camera.position.z = 5;
   }
+  
+  
+  
 
   animate() {
     this.ngZone.run(() => {
