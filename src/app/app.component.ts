@@ -33,4 +33,8 @@ export class AppComponent implements DoCheck {
 
     this.userName = this.service.getUserName();
   }
+
+
+  
+
 }

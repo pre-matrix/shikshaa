@@ -1,0 +1,67 @@
+<div id="container">
+  <mat-card class="example-card">
+    <mat-card-header>
+      <div mat-card-avatar class="t-card>Interactive Circle"></div>
+      <mat-card-title>Circle</mat-card-title>
+
+      <mat-card-subtitle id="rewardPoints">Points: 0</mat-card-subtitle>
+      <mat-card-subtitle id="badgeContainer">Starter</mat-card-subtitle>
+      <mat-card-subtitle id="radiusText">Radius: 50px</mat-card-subtitle>
+      <mat-card-subtitle id="circumferenceText"
+        >Circumference: 157.08px</mat-card-subtitle
+      >
+      <div id="rewardContainer">
+        <label for="radiusSlider">Adjust the radius:</label>
+        <input
+          type="range"
+          id="radiusSlider"
+          min="20"
+          max="100"
+          step="1"
+          value="50"
+        />
+
+        <div id="circleContainer">
+          <div id="circle2"></div>
+          <div id="circle">
+            <div id="centerPoint"></div>
+            <div id="radiusLine"></div>
+          </div>
+        </div>
+
+        <!-- Overlay for prompting -->
+        <div id="overlay">
+          <div id="overlay-content">
+            <p id="dialog-text"></p>
+            <button id="ok-button">OK</button>
+          </div>
+        </div>
+
+        <div id="congrats-overlay">
+          <div id="congrats-content">
+            <h1>Congratulations! You've earned 25 points!</h1>
+            <p>
+              In this interactive exercise, you've learned the importance of
+              points, radius, and circumference in forming a circle.
+            </p>
+            <p>
+              The radius is a line segment from the center of the circle to any
+              point on its circumference. It defines the size of the circle.
+            </p>
+            <p>
+              The circumference is the total length of the circle's boundary,
+              and it's calculated as 2π times the radius. It's crucial for
+              understanding the circle's dimensions and properties.
+            </p>
+            <p>
+              Keep exploring and learning to unlock more achievements and
+              enhance your understanding of geometry!
+            </p>
+          </div>
+        </div>
+      </div>
+    </mat-card-header>
+    <mat-card-content> </mat-card-content>
+    <mat-card-actions> </mat-card-actions>
+  </mat-card>
+</div>

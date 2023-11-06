@@ -67,3 +67,9 @@
     background: black;
     cursor: pointer;
   }
+
+  .backbutton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }

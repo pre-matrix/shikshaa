@@ -1,16 +1,20 @@
-<app-my-component></app-my-component>
-<div class="main">
+<app-my-component *ngIf="currentComponent === 'my-component'"></app-my-component>
+<app-circle *ngIf="currentComponent === 'circle-component'"></app-circle>
+
+<div class="main" *ngIf="isCubeOn">
     <div class="container">
       <div class="text-box">
         <div class="heading">To infinity and Beyond</div>
         <div class="button-wrapper">
-          <div class="button">Learn More</div>
-          <div class="button">Contact Us</div>
+          <div class="button" (click)="switchToCircleComponent()">Learn More</div>
+          
         </div>
       </div>
     </div>
     <script src="../../assets/three.min.js"></script>
   </div>
-
+<div class="backbutton">
+  <button  mat-button (click)="switchToMyComponent()" *ngIf="isBackbut">Back</button>
+</div>
 
 

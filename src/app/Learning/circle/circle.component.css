@@ -1,0 +1,145 @@
+#container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 100px; 
+}
+
+h1 {
+    color: #333;
+}
+
+#radiusSlider {
+    width: 200px;
+}
+
+
+
+#circleContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px; /* Keep top margin as 20px */
+}
+
+#circle {
+    width: 200px;
+    height: 200px;
+    margin-top: 50px;
+    background-color: #007BFF;
+    border-radius: 50%;
+    transition: width 0.3s, height 0.3s;
+    position: relative;
+    overflow: hidden;
+    
+}
+
+#circle2 {
+    width: 200px;
+    height: 200px;
+    margin-top: 42px;
+    
+    border-radius: 50%;
+    transition: width 0.3s, height 0.3s;
+    position: absolute;
+    overflow: hidden;
+    border: 8px solid #ff000000;
+}
+
+#circle2:hover {
+    border: 8px solid red;
+    cursor:pointer;
+}
+
+
+#centerPoint {
+    width: 10px;
+    height: 10px;
+    background-color: #333;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#radiusLine {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform-origin: left;
+    height: 3px; /* Increase line thickness */
+    background-color: #333;
+    width: 80%; /* Make the radius line longer than the circle */
+}
+
+#radiusLine:hover {
+    cursor:pointer;
+    background-color: red;
+    height: 10px;
+    stroke: 6px solid red;
+}
+
+#radiusText {
+    padding-top: 50px;
+    position: relative;
+    font-size: 14px;
+    color: #333;
+    
+}
+
+#circumferenceText {
+    position: relative;
+    font-size: 14px;
+    color: #333;
+}
+
+ /* Overlay styles */
+ #overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 999;
+}
+
+#overlay-content {
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    padding: 20px;
+}
+
+/* Dialog styles */
+#dialog-text {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+/* OK button styles */
+#ok-button {
+    background: #007BFF;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}
+
+#ok-button:hover {
+    background: #0056b3;
+}
+
+.example-card {
+    max-width: 700px;
+  }
+  
+  .example-header-image {
+    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+    background-size: cover;
+  }

@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { MyComponentComponent } from '../my-component/my-component.component';
+
+
+
 
 @Component({
   selector: 'app-home',
@@ -8,5 +10,22 @@ import { MyComponentComponent } from '../my-component/my-component.component';
   
 })
 export class HomeComponent {
-  
+
+  currentComponent: string = 'my-component';
+  isCubeOn: boolean = true;
+  isBackbut: boolean = false;
+
+  switchToCircleComponent() {
+    this.currentComponent = 'circle-component';
+    this.isCubeOn= false;
+    this.isBackbut= true;
+  }
+
+  switchToMyComponent() {
+    this.currentComponent = 'my-component';
+    this.isCubeOn= true;
+    this.isBackbut= false;
+  }
+
+
 }

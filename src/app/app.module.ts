@@ -20,6 +20,8 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { environment } from '../environments/environment';
 import { MyComponentComponent } from './my-component/my-component.component';
+import { CircleComponent } from './Learning/circle/circle.component';
+
 
 
 @NgModule({
@@ -30,7 +32,9 @@ import { MyComponentComponent } from './my-component/my-component.component';
     HomeComponent,
     UserlistingComponent,
     UpdatepopupComponent,
-    MyComponentComponent
+    MyComponentComponent,
+    CircleComponent
+
   ],
   imports: [
     BrowserModule,
@@ -54,4 +58,7 @@ import { MyComponentComponent } from './my-component/my-component.component';
   providers: [AuthService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule { 
+
+
+}
