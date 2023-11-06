@@ -7,9 +7,15 @@ import { Component, AfterViewInit, OnInit } from '@angular/core';
 })
 export class CircleComponent implements  AfterViewInit {
   points: number = 0;
-  constructor() { }
+  radiusClicked: boolean;
+  circumferenceClicked: boolean;
+  constructor() {
+    this.radiusClicked = false;
+    this.circumferenceClicked = false;
+   }
   ngOnInit(){
     this.points = 0;
+
   }
   ngAfterViewInit() {
     const radiusSlider = document.getElementById("radiusSlider") as HTMLInputElement;
@@ -26,7 +32,8 @@ export class CircleComponent implements  AfterViewInit {
     const congratsOverlay = document.getElementById("congrats-overlay") as HTMLElement;
 
     
-    const maxPoints = 35; // Set your maximum achievable points
+    const maxPoints = 25; // Set your maximum achievable points
+    
 
     const updatePoints = (amount: number) => {
       this.points += amount;
@@ -45,14 +52,20 @@ export class CircleComponent implements  AfterViewInit {
 
 
 
-    radiusLine.addEventListener("click", ()=> {
-      rlinemod();
-      updatePoints(10);
+    radiusLine.addEventListener("click", () => {
+      if (!this.radiusClicked) {
+        rlinemod();
+        updatePoints(10);
+        this.radiusClicked = true;
+      }
     }, true);
 
     circle2.addEventListener("click", () => {
-      cirmod();
-      updatePoints(15);
+      if (!this.circumferenceClicked) {
+        cirmod();
+        updatePoints(15);
+        this.circumferenceClicked = true;
+      }
     }, true);
 
  
