@@ -69,7 +69,7 @@ export class CircleComponent implements  AfterViewInit {
     }, true);
 
  
-    dialogText.textContent = "Please click on the radius and circumference of the circle.";
+    dialogText.textContent = "Hi, Play with slider to understand how the radius and circumference will change the size of the circle.Then try to identify the radius and circumference of the circle.";
     overlay.style.display = "block";
     congratsOverlay.style.display = "none";
 
