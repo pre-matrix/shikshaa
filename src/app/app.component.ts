@@ -1,6 +1,9 @@
-import { Component, DoCheck } from "@angular/core";
+import { Component, DoCheck, ViewChild } from "@angular/core";
 import { Route, Router } from "@angular/router";
 import { AuthService } from "./service/auth.service";
+import { HomeComponent } from "./home/home.component";
+
+
 
 @Component({
   selector: "app-root",
@@ -33,8 +36,11 @@ export class AppComponent implements DoCheck {
 
     this.userName = this.service.getUserName();
   }
+  // private circleCompBut: HomeComponent = new HomeComponent; this is to import from home component.
 
-
-  
+  // UseCircleBut() {
+  //   this.circleCompBut.switchToCircleComponent();
+  //   this.circleCompBut.switchToMyComponent();
+  // }
 
 }

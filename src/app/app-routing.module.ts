@@ -5,6 +5,7 @@ import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { UserlistingComponent } from './userlisting/userlisting.component';
 import { AuthGuard } from './guard/auth.guard';
+import { CircleComponent } from './Learning/circle/circle.component';
 
 
 
@@ -13,6 +14,8 @@ const routes: Routes = [
   {path:'register', component:RegisterComponent},
   {path:'login', component:LoginComponent},
   {path:'user', component:UserlistingComponent, canActivate:[AuthGuard]},
+  {path:'circle', component:CircleComponent},
+  
  
 ];
 

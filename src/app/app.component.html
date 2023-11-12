@@ -1,14 +1,14 @@
 
-
+<!-- <app-sidebar></app-sidebar> -->
 <!-- Toolbar -->
-<div class="toolbar" role="banner" *ngIf="isMenuRequire">
+<mat-toolbar class="toolbar" role="banner" *ngIf="isMenuRequire">
   <img height="40" alt="Shikshaa Logo" src="../assets/Shikshaa_logo_white.svg" />
   <p *ngIf="userName" >Welcome, {{ userName }}</p>
   <div id="menu">
     <p><a *ngIf="isAdmin" mat-raised-button color="primary" routerLink="/user" >Users</a></p>
     <p><a mat-raised-button color="primary" [matMenuTriggerFor]="belowMenu">Courses</a></p>
     <mat-menu #belowMenu="matMenu" yPosition="below">
-      <button mat-menu-item>Circle</button>
+      <button mat-menu-item routerLink="/circle">Circle</button>
       <button mat-menu-item>Square</button>
     </mat-menu>
  
@@ -63,9 +63,6 @@
       />
     </svg>
   </a>
-</div>
+</mat-toolbar>
 
-
-
-
-  <router-outlet></router-outlet>
+<router-outlet></router-outlet>

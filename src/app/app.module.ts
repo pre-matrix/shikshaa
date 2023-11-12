@@ -4,6 +4,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MaterialModule } from './material.module';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSidenavModule} from '@angular/material/sidenav';
+import { MatListModule }from '@angular/material/list'
+
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
@@ -21,6 +25,9 @@ import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { environment } from '../environments/environment';
 import { MyComponentComponent } from './my-component/my-component.component';
 import { CircleComponent } from './Learning/circle/circle.component';
+import { MatIconModule } from '@angular/material/icon';
+import { SidebarComponent } from './sidebar/sidebar.component';
+import { MatButtonModule } from '@angular/material/button';
 
 
 
@@ -33,7 +40,8 @@ import { CircleComponent } from './Learning/circle/circle.component';
     UserlistingComponent,
     UpdatepopupComponent,
     MyComponentComponent,
-    CircleComponent
+    CircleComponent,
+    SidebarComponent
 
   ],
   imports: [
@@ -42,6 +50,10 @@ import { CircleComponent } from './Learning/circle/circle.component';
     BrowserAnimationsModule,
     
     MaterialModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatListModule,
+    MatIconModule,
     ReactiveFormsModule,
     HttpClientModule,
     AngularFireModule.initializeApp(environment.firebase),
@@ -54,6 +66,7 @@ import { CircleComponent } from './Learning/circle/circle.component';
     RouterModule.forRoot([
       // Define your routes here
     ]),
+    MatButtonModule,
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]

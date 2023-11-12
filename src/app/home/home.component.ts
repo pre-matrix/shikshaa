@@ -27,5 +27,7 @@ export class HomeComponent {
     this.isBackbut= false;
   }
 
-
+ 
 }
+
+
