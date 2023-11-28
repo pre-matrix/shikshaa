@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Color Changing Sphere and Band</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      position: relative;
+      
+    }
+
+    canvas {
+      display: block;
+    }
+
+    .slider-container {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      display: flex;
+      flex-direction: column;
+      z-index: 1;
+    }
+
+    .slider-label {
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="slider-container">
+    <label class="slider-label" for="sliderX">Move X:</label>
+    <input id="sliderX" type="range" min="-5" max="5" step="0.1">
+    <label class="slider-label" for="sliderY">Move Y:</label>
+    <input id="sliderY" type="range" min="-5" max="5" step="0.1">
+    <label class="slider-label" for="sliderRot">Rotate:</label>
+    <input id="sliderRot" type="range" min="-3.14" max="3.14" step="0.01">
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/87/three.min.js"></script>
+  <script type="text/javascript" src='./js/OrbitControls.js'></script>
+  <script type="text/javascript" src='./js/FlakesTexture.js'></script>
+  <script type="text/javascript" src='./js/RGBELoader.js'></script>
+
+  <script>
+    var scene = new THREE.Scene();
+    scene.background = new THREE.Color(0xdddddd);
+    var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+  
+
+    scene.add(new THREE.AxisHelper(1));
+    
+    
+    var renderer = new THREE.WebGLRenderer();
+    renderer.toneMapping = THREE.ReinhardToneMapping;
+    renderer.toneMappingExposere = 2.3;
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+
+    // Ambient light
+    var ambientLight = new THREE.AmbientLight(0x404040);
+    scene.add(ambientLight);
+
+    // Point light
+    var spotLight = new THREE.SpotLight(0xffffff, 1);
+    spotLight.position.set(
+      camera.position.x + 10,camera.position.y + 10, camera.position.z + 10,
+      )
+    scene.add(spotLight);
+
+    // Create sphere geometry
+    var sphereGeometry = new THREE.SphereGeometry(1, 32, 16);
+    
+
+    // Create texture
+    let texture = new THREE.CanvasTexture(new FlakesTexture());
+    texture.wrapS = THREE.RepeatWrapping;
+    texture.wrapT = THREE.RepeatWrapping;
+    texture.repeat.x = 10;
+    texture.repeat.y = 6;
+
+    // Create material with texture
+    var material = new THREE.MeshPhysicalMaterial({
+      color: 0X8418ca,
+      clearcoat: 1.0,
+      clearcoatRoughness: 0.1,
+      metalness: 0.01,
+      roughness: 0.5,
+      normalMap: texture,
+      normalScale: new THREE.Vector2(0.1, 0.1),
+      side: THREE.DoubleSide,
+    });
+
+    // Create sphere mesh
+    var sphereMesh = new THREE.Mesh(sphereGeometry, material);
+
+    // Position and add the mesh to the scene
+    sphereMesh.rotation.x = Math.PI / 2;
+    scene.add(sphereMesh);
+
+    // Create wider band with a width of 1/10 of the unit
+    var bandGeometry = new THREE.CylinderGeometry(1.2, 1.2, 0.2, 32);
+    var bandMaterial = new THREE.MeshPhysicalMaterial({
+      color: 0xff0000, // Set initial color
+      side: THREE.DoubleSide,
+    });
+
+    var bandMesh = new THREE.Mesh(bandGeometry, bandMaterial);
+    scene.add(bandMesh);
+
+    camera.position.z = 5;
+
+    var controls = new THREE.OrbitControls(camera, renderer.domElement);
+    controls.minDistance = 2;
+    controls.maxDistance = 5;
+
+    // Sliders
+    var sliderX = document.getElementById('sliderX');
+    var sliderY = document.getElementById('sliderY');
+    var sliderRot = document.getElementById('sliderRot');
+
+    // Event listeners for sliders
+    sliderX.addEventListener('input', moveObjects);
+    sliderY.addEventListener('input', moveObjects);
+    sliderRot.addEventListener('input', moveObjects);
+
+    // Event listener for mouse click
+    document.addEventListener('click', onClick);
+
+    function moveObjects() {
+      sphereMesh.position.x = parseFloat(sliderX.value);
+      sphereMesh.position.y = parseFloat(sliderY.value);
+      sphereMesh.rotation.z = parseFloat(sliderRot.value);
+
+      bandMesh.position.x = parseFloat(sliderX.value);
+      bandMesh.position.y = parseFloat(sliderY.value);
+      bandMesh.rotation.z = parseFloat(sliderRot.value);
+    }
+
+    function onClick(event) {
+      var raycaster = new THREE.Raycaster();
+      var mouse = new THREE.Vector2();
+
+      mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+      mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
+
+      raycaster.setFromCamera(mouse, camera);
+
+      var intersects = raycaster.intersectObjects([bandMesh, sphereMesh]);
+
+      if (intersects.length > 0) {
+        var selectedObject = intersects[0].object;
+
+        if (selectedObject === bandMesh) {
+          changeBandColor();
+          alert("circumference");
+        } else if (selectedObject === sphereMesh) {
+          changeSphereColor();
+          alert("Sphere");
+        }
+      }
+    }
+
+    function changeBandColor() {
+      bandMesh.material.color.set(Math.random() * 0xffffff);
+    }
+
+    function changeSphereColor() {
+      sphereMesh.material.color.set(Math.random() * 0xffffff);
+    }
+
+    // Animation loop
+    function animate() {
+      requestAnimationFrame(animate);
+      controls.update();
+      renderer.render(scene, camera);
+    }
+
+    animate();
+  </script>
+</body>
+
+</html>
