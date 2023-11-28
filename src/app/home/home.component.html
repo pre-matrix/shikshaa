@@ -1,12 +1,14 @@
 <app-my-component *ngIf="currentComponent === 'my-component'"></app-my-component>
 <app-circle *ngIf="currentComponent === 'circle-component'"></app-circle>
+<app-sphere *ngIf="currentComponent === 'sphere-component'"></app-sphere>
 
 <div class="main" *ngIf="isCubeOn">
     <div class="container">
       <div class="text-box">
         <div class="heading">To infinity and Beyond</div>
         <div class="button-wrapper">
-          <div class="button" (click)="switchToCircleComponent()">Learn More</div>
+          <div class="button" (click)="switchToCircleComponent()">Circle</div>
+          <div class="button" (click)="switchToSphereComponent()">Sphere</div>
           
         </div>
       </div>

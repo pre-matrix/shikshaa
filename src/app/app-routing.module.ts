@@ -6,6 +6,7 @@ import { LoginComponent } from './login/login.component';
 import { UserlistingComponent } from './userlisting/userlisting.component';
 import { AuthGuard } from './guard/auth.guard';
 import { CircleComponent } from './Learning/circle/circle.component';
+import { SphereComponent } from './Learning/sphere/sphere.component';
 
 
 
@@ -15,6 +16,7 @@ const routes: Routes = [
   {path:'login', component:LoginComponent},
   {path:'user', component:UserlistingComponent, canActivate:[AuthGuard]},
   {path:'circle', component:CircleComponent},
+  {path:'sphere', component:SphereComponent},
   
  
 ];

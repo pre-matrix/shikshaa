@@ -1,0 +1,28 @@
+body {
+  margin: 0;
+  overflow: hidden;
+  position: relative;
+  
+}
+
+#sphereCanvas {
+  top: 40px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index:-1;
+}
+
+.slider-container {
+  color: white;
+  position: absolute;
+  top: 100px;
+  left: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.slider-label {
+  margin-bottom: 5px;
+}

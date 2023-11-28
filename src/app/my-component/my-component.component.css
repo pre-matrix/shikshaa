@@ -1,8 +1,11 @@
+body {
+    margin: 0;
+    overflow: hidden;
+    position: relative;
+    
+  }
 .cube {
     position: absolute;
-    width: 99vw;
-    height: 98vh;
-    margin-left: 1vw;
     display: flex;
     justify-content: center;
     align-items: center;

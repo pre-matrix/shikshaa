@@ -21,6 +21,12 @@ export class HomeComponent {
     this.isBackbut= true;
   }
 
+  switchToSphereComponent() {
+    this.currentComponent = 'sphere-component';
+    this.isCubeOn= false;
+    this.isBackbut= true;
+  }
+
   switchToMyComponent() {
     this.currentComponent = 'my-component';
     this.isCubeOn= true;

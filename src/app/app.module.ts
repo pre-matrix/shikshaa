@@ -28,6 +28,7 @@ import { CircleComponent } from './Learning/circle/circle.component';
 import { MatIconModule } from '@angular/material/icon';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { MatButtonModule } from '@angular/material/button';
+import { SphereComponent } from './Learning/sphere/sphere.component';
 
 
 
@@ -41,7 +42,8 @@ import { MatButtonModule } from '@angular/material/button';
     UpdatepopupComponent,
     MyComponentComponent,
     CircleComponent,
-    SidebarComponent
+    SidebarComponent,
+    SphereComponent
 
   ],
   imports: [
