@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Atomic Structure - Oxygen</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+    }
+
+    canvas {
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/87/three.min.js"></script>
+    <script type="text/javascript" src='./js/OrbitControls.js'></script>
+    <script type="text/javascript" src='./js/FlakesTexture.js'></script>
+    <script type="text/javascript" src='./js/RGBELoader.js'></script>
+  <script>
+
+    
+    // Set up scene
+    var scene = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+    var renderer = new THREE.WebGLRenderer();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor( 0xf, );
+    document.body.appendChild(renderer.domElement);
+
+    // Ambient light
+    var ambientLight = new THREE.AmbientLight(0x404040);
+    scene.add(ambientLight);
+
+    // Point light
+    var spotLight = new THREE.SpotLight(0xffffff, 0.3);
+    spotLight.position.set(
+      camera.position.x + 10, camera.position.y + 10, camera.position.z + 10,
+    )
+    scene.add(spotLight);
+
+    // Create nucleus
+    var protonGeometry = new THREE.SphereGeometry(0.1, 64, 64);
+    var neutronGeometry = new THREE.SphereGeometry(0.1, 64, 64);
+    // var protonMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+    // var neutronMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });
+    
+    //create orbital 
+    var onesGeometry = new THREE.SphereGeometry(0.6, 32, 32);
+    var twosGeometry = new THREE.SphereGeometry(3, 64, 64);
+
+    // Create texture
+    let texture = new THREE.CanvasTexture(new FlakesTexture());
+    texture.wrapS = THREE.RepeatWrapping;
+    texture.wrapT = THREE.RepeatWrapping;
+    texture.repeat.x = 10;
+    texture.repeat.y = 6;
+
+    // Create material with texture
+    var pMaterial = new THREE.MeshPhysicalMaterial({
+      color: 0X8418ca,
+      clearcoat: 1.0,
+      clearcoatRoughness: 0.1,
+      metalness: 0.01,
+      roughness: 0.5,
+      normalMap: texture,
+      normalScale: new THREE.Vector2(0.1, 0.1),
+      side: THREE.DoubleSide,
+    });
+
+    var nMaterial = new THREE.MeshPhysicalMaterial({
+      color: 0X9840,
+      clearcoat: 1.0,
+      clearcoatRoughness: 0.1,
+      metalness: 0.01,
+      roughness: 0.5,
+      normalMap: texture,
+      normalScale: new THREE.Vector2(0.1, 0.1),
+      side: THREE.DoubleSide,
+    });
+
+
+
+    var eMaterial = new THREE.MeshPhysicalMaterial({
+      color: 0Xff5050,
+      clearcoat: 1.0,
+      clearcoatRoughness: 0.1,
+      metalness: 0.1,
+      roughness: 0.5,
+      normalMap: texture,
+      normalScale: new THREE.Vector2(0.1, 0.1),
+      side: THREE.DoubleSide,
+    });
+
+    
+    var onesMaterial = new THREE.MeshPhysicalMaterial({
+      color: 0Xffff99,
+      transparent: true,
+      opacity: 0.1 
+    });
+
+    var twosMaterial = new THREE.MeshPhysicalMaterial({
+      color: 0X99c2ff,
+      transparent: true,
+      opacity: 0.15 
+    });
+
+
+    var onesMesh = new THREE.Mesh(onesGeometry, onesMaterial);
+    var twosMesh = new THREE.Mesh(twosGeometry, twosMaterial);
+
+
+    var nucleus = new THREE.Group();
+    for (let i = 0; i < 8; i++) {
+      var proton = new THREE.Mesh(protonGeometry, pMaterial);
+      var neutron = new THREE.Mesh(neutronGeometry, nMaterial);
+
+      // Arrange protons and neutrons closely together to touch each other
+      var angle = (i / 8) * Math.PI * 2;
+      var radius = 0.4; // Adjusted radius for neutrons to touch each other
+      var radiusp = 0.2;
+      proton.position.set(Math.cos(angle) * radiusp, Math.sin(angle) * radiusp, 0);
+      neutron.position.set(-Math.cos(angle) * radius, -Math.sin(angle) * radius, 0);
+
+      nucleus.add(proton);
+      nucleus.add(neutron);
+    }
+   
+
+
+    // Create electrons
+    var electronGeometry = new THREE.SphereGeometry(0.1, 16, 8);
+    var electronMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+
+    var electronGroup1s = new THREE.Group();
+    for (let i = 0; i < 2; i++) {
+      var electron = new THREE.Mesh(electronGeometry, eMaterial);
+      var angle = (i / 2) * Math.PI * 2;
+      var radiusE = 1.5;
+      electron.position.set(Math.cos(angle) * radiusE, Math.sin(angle) * radiusE, 0);
+      electronGroup1s.add(electron);
+    }
+
+    var electronGroup2s = new THREE.Group();
+    for (let i = 0; i < 8; i++) {
+      var electron = new THREE.Mesh(electronGeometry, eMaterial);
+      var angle = (i / 8) * Math.PI * 2;
+      var radius = 3;
+      electron.position.set(Math.cos(angle) * radius, Math.sin(angle) * radius, 0);
+      electronGroup2s.add(electron);
+    }
+
+    
+    
+    nucleus.add(electronGroup1s, electronGroup2s); // Add electron group to the nucleus
+    scene.add(nucleus, onesMesh, twosMesh);
+
+    // Set camera position
+    camera.position.z = 8;
+
+    var controls = new THREE.OrbitControls(camera, renderer.domElement);
+    controls.minDistance = 1;
+    controls.maxDistance = 10;
+
+    // Function to add vibration motion to particles
+function addVibrationMotion(particle, frequency, amplitude) {
+  particle.userData = { offset: Math.random() * Math.PI * 2 }; // Random initial offset
+
+  // Save the original position for reference
+  particle.userData.originalPosition = particle.position.clone();
+
+  // Update particle position in the animation loop
+  particle.onBeforeRender = function () {
+    particle.position.x = particle.userData.originalPosition.x + Math.sin(frequency * particle.userData.offset) * amplitude;
+    particle.position.y = particle.userData.originalPosition.y + Math.cos(frequency * particle.userData.offset) * amplitude;
+    particle.position.z = particle.userData.originalPosition.z;
+    particle.userData.offset += 0.01; // Increment the offset for continuous motion
+  };
+}
+
+// Apply vibration motion to electrons, neutrons, and protons
+nucleus.children.forEach(function (particle) {
+  addVibrationMotion(particle, 12, 0.01); // Adjust frequency and amplitude as needed
+});
+
+electronGroup1s.children.forEach(function (electron) {
+  addVibrationMotion(electron, 12, 0.01);
+});
+
+electronGroup2s.children.forEach(function (electron) {
+  addVibrationMotion(electron, 22, 0.02);
+});
+
+
+    // Animation loop
+    function animate() {
+      requestAnimationFrame(animate);
+
+      // Rotate electrons
+      electronGroup1s.rotation.x += 0.01;
+      electronGroup1s.rotation.y += 0.01;
+
+      electronGroup2s.rotation.x = 0.001;
+      electronGroup2s.rotation.z += 0.001;
+
+      controls.update();
+      renderer.render(scene, camera);
+    }
+
+    animate();
+  </script>
+</body>
+
+</html>

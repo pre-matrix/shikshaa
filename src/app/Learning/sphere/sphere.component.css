@@ -1,11 +1,13 @@
 body {
   margin: 0;
+  background: black;
   overflow: hidden;
-  position: relative;
-  
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-#sphereCanvas {
+/* #sphereCanvas {
   top: 40px;
   position: relative;
   display: flex;
@@ -25,4 +27,18 @@ body {
 
 .slider-label {
   margin-bottom: 5px;
+} */
+
+.ful {
+  width: 80vw;
+  height:90vh;
+  margin-left: 10vw;
+}
+
+img {
+  width: 50vw;
+  height: auto;
+  margin-top: 70px;
+  margin-left: 25vw;
+  padding: 50px;
 }
