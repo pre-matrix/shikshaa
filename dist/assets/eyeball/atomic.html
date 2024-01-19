@@ -15,20 +15,20 @@
       display: block;
     }
 
-    #einfo {
+    .info {
       position: absolute;
-      padding: 3px;
-      top: 10px;
-      font-size: 2em;
+      padding: 4px;
+      font-size: 12px;
+      font-family: 'poppins', sans-serif;
       font-weight: 700;
       width: fit-content;
       text-align: center;
       z-index: 100;
       display: block;
-      /* color: aliceblue;
+      color: aliceblue;
       background-color: rgba(240, 248, 255, 0.254);
       border: solid 2px #767676;
-      border-radius: 5px; */
+      border-radius: 5px;
     }
   </style>
 </head>
@@ -41,7 +41,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.7/dat.gui.min.js"></script>
 
   <!-- dom text elements -->
-  <div id="einfo">e</div>
+  <div id="einfo">electrons</div>
+  <div id="ninfo">neutrons</div>
+  <div id="pinfo">protons</div>
 
   <script>
     var isPaused = false;
@@ -56,7 +58,7 @@
     window.addEventListener('resize', onWindowResize);
 
     var scene = new THREE.Scene();
-    var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+    var camera = new THREE.PerspectiveCamera(15, window.innerWidth / window.innerHeight, 0.1, 1000);
     var renderer = new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
@@ -147,24 +149,57 @@
       }
     }
 
-    function updateInfoDivPosition(electron, infoDiv) {
-      var electronWorldPosition = new THREE.Vector3();
-      electron.getWorldPosition(electronWorldPosition);
+    function updateInfoDivPosition(electron, einfoDiv) {
+    var electronWorldPosition = new THREE.Vector3();
+    electron.getWorldPosition(electronWorldPosition);
 
-      var screenCoordinates = electronWorldPosition.project(camera);
+    var screenCoordinates = electronWorldPosition.project(camera);
 
-      var x = (screenCoordinates.x + 1) * window.innerWidth / 2;
-      var y = (-screenCoordinates.y + 1) * window.innerHeight / 2;
+    var x = (screenCoordinates.x + 1) * window.innerWidth / 2;
+    var y = (-screenCoordinates.y + 1) * window.innerHeight / 2;
 
-      infoDiv.style.left = (x -  8) + 'px';
-      infoDiv.style.top = (y - 20) + 'px';
-    }
+    einfoDiv.classList.add('info');
+    einfoDiv.style.left = (x + 28) + 'px';
+    einfoDiv.style.top = (y - 20) + 'px';
+    einfoDiv.style.transform = `scale(${1 / camera.zoom})`; // Adjust for zoom
+  }
+
+  
+  function updateNutronInfoDivPosition(nutron, ninfoDiv) {
+  var nutronWorldPosition = new THREE.Vector3();
+  nutron.getWorldPosition(nutronWorldPosition);
+
+  var nscreenCoordinates = nutronWorldPosition.project(camera);
+
+  var x = (nscreenCoordinates.x + 1) * window.innerWidth / 2;
+  var y = (-nscreenCoordinates.y + 1) * window.innerHeight / 2;
+
+  ninfoDiv.classList.add('info');
+  ninfoDiv.style.left = (x - 30) + 'px';
+  ninfoDiv.style.top = (y - 18) + 'px';
+  ninfoDiv.style.transform = `scale(${1 / camera.zoom})`; // Adjust for zoom
+}
+
+  function updateProtonInfoDivPosition(proton, pinfoDiv) {
+    var protonWorldPosition = new THREE.Vector3();
+    proton.getWorldPosition(protonWorldPosition);
+
+    var pscreenCoordinates = protonWorldPosition.project(camera);
+
+    var x = (pscreenCoordinates.x + 1) * window.innerWidth / 2;
+    var y = (-pscreenCoordinates.y + 1) * window.innerHeight / 2;
+
+    pinfoDiv.classList.add('info');
+    pinfoDiv.style.left = (x - 30) + 'px';
+    pinfoDiv.style.top = (y + 80) + 'px';
+    pinfoDiv.style.transform = `scale(${1 / camera.zoom})`; // Adjust for zoom
+  }
 
     function createProtons() {
       for (let i = 0; i < 8; i++) {
         var proton = new THREE.Mesh(protonGeometry, pMaterial);
         var angle = (i / 8) * Math.PI * 2;
-        var radiusp = 0.2;
+        var radiusp = 0.4;
         proton.position.set(Math.cos(angle) * radiusp, Math.sin(angle) * radiusp, 0);
         proton.myName = "p" + i;
         nucleus.add(proton);
@@ -175,7 +210,7 @@
       for (let i = 0; i < 8; i++) {
         var neutron = new THREE.Mesh(neutronGeometry, nMaterial);
         var angle = (i / 8) * Math.PI * 2;
-        var radius = 0.4;
+        var radius = 0.2;
         neutron.position.set(-Math.cos(angle) * radius, -Math.sin(angle) * radius, 0);
         neutron.myName = "n" + i;
         nucleus.add(neutron);
@@ -209,7 +244,7 @@
     nucleus.add(electronGroup1s, electronGroup2s);
     scene.add(nucleus);
 
-    camera.position.z = 8;
+    camera.position.z = 30;
 
 // Set up a radial gradient background from grey to dark grey
 var gradientCanvas = document.createElement('canvas');
@@ -233,7 +268,10 @@ scene.background = gradientTexture;
 
     var controls = new THREE.OrbitControls(camera, renderer.domElement);
     controls.minDistance = 1;
-    controls.maxDistance = 10;
+    controls.maxDistance = 30;
+
+
+
 
     function addVibrationMotion(particle, frequency, amplitude) {
       particle.userData = { offset: Math.random() * Math.PI * 2 };
@@ -244,7 +282,7 @@ scene.background = gradientTexture;
           particle.position.x = particle.userData.originalPosition.x + Math.sin(frequency * particle.userData.offset) * amplitude;
           particle.position.y = particle.userData.originalPosition.y + Math.cos(frequency * particle.userData.offset) * amplitude;
           particle.position.z = particle.userData.originalPosition.z;
-          particle.userData.offset += 0.01;
+          particle.userData.offset += 0.002;
         }
       };
     };
@@ -253,28 +291,34 @@ scene.background = gradientTexture;
       addVibrationMotion(particle, 12, 0.01);
     });
 
-    electronGroup1s.children.forEach(function (electron) {
-      addVibrationMotion(electron, 12, 0.01);
-    });
+    // electronGroup1s.children.forEach(function (electron) {
+    //   addVibrationMotion(electron, 12, 0.01);
+    // });
 
-    electronGroup2s.children.forEach(function (electron) {
-      addVibrationMotion(electron, 22, 0.02);
-    });
+    // electronGroup2s.children.forEach(function (electron) {
+    //   addVibrationMotion(electron, 22, 0.02);
+    // });
 
     var gui = new dat.GUI();
     var labelControls = {
+      showNucleusLabels : true,
       showElectronLabels: true,
       showProtonLabels: true,
       showNeutronLabels: true,
       playPauseLabels: false,
     };
 
-    gui.add(labelControls, 'showElectronLabels').name('Show Electron Labels').onChange(function (value) {
-      electronGroup1s.children.forEach(function (electron) {
-        electron.visible = value;
+    gui.add(labelControls, 'showNucleusLabels').name('Show Nucleus Labels').onChange(function (value) {
+      nucleus.children.forEach(function (particle) {
+        if (particle.myName && particle.myName.startsWith("p")) {
+          particle.visible = value;
+          
+        }
       });
-      electronGroup2s.children.forEach(function (electron) {
-        electron.visible = value;
+      nucleus.children.forEach(function (particle) {
+        if (particle.myName && particle.myName.startsWith("n")) {
+          particle.visible = value;
+        }
       });
     });
 
@@ -294,6 +338,16 @@ scene.background = gradientTexture;
       });
     });
 
+    gui.add(labelControls, 'showElectronLabels').name('Show Electron Labels').onChange(function (value) {
+      electronGroup1s.children.forEach(function (electron) {
+        electron.visible = value;
+      });
+      electronGroup2s.children.forEach(function (electron) {
+        electron.visible = value;
+      });
+    });
+
+    
     gui.add(labelControls, 'playPauseLabels').name('Play Pause').onChange(function () {
       toggleAnimation();
     });
@@ -303,24 +357,40 @@ scene.background = gradientTexture;
         requestAnimationFrame(animate);
 
         electronGroup2s.children.forEach(function (electron) {
-          var infoDiv = document.getElementById('einfo');
-          updateInfoDivPosition(electron, infoDiv);
+          var einfoDiv = document.getElementById('einfo');
+          updateInfoDivPosition(electron, einfoDiv);
+        });
+
+        nucleus.children.forEach(function (nutron) {
+          var ninfoDiv = document.getElementById('ninfo');
+          updateNutronInfoDivPosition(nutron, ninfoDiv);
+        });
+
+        nucleus.children.forEach(function (proton) {
+          var pinfoDiv = document.getElementById('pinfo');
+          updateProtonInfoDivPosition(proton, pinfoDiv);
         });
 
         electronGroup1s.rotation.x += 0.01;
         electronGroup1s.rotation.y += 0.01;
 
-        electronGroup2s.rotation.x += 0.01;
-        electronGroup2s.rotation.z += 0.01;
-        electronGroup2s.rotation.z += 0.01;
+        electronGroup2s.rotation.x += 0.001;
+        electronGroup2s.rotation.z += 0.001;
+        electronGroup2s.rotation.z += 0.001;
 
         controls.update();
         renderer.render(scene, camera);
       }
     };
 
-    var infoDiv = document.getElementById('einfo');
-    infoDiv.style.position = 'absolute';
+    var einfoDiv = document.getElementById('einfo');
+    einfoDiv.style.position = 'absolute';
+
+    var ninfoDiv = document.getElementById('ninfo');
+    ninfoDiv.style.position = 'absolute';
+
+    var pinfoDiv = document.getElementById('pinfo');
+    pinfoDiv.style.position = 'absolute';
 
     function onWindowResize() {
       camera.aspect = window.innerWidth / window.innerHeight;
