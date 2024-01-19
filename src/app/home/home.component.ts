@@ -33,6 +33,12 @@ export class HomeComponent {
     this.isBackbut= false;
   }
 
+  switchToAtomComponent() {
+    this.currentComponent = 'atom-component';
+    this.isCubeOn= false;
+    this.isBackbut= true;
+  }
+
  
 }
 

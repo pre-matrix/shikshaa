@@ -29,6 +29,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { MatButtonModule } from '@angular/material/button';
 import { SphereComponent } from './Learning/sphere/sphere.component';
+import { AtomicStructureComponent } from './Learning/atomic-structure/atomic-structure.component';
 
 
 
@@ -43,7 +44,8 @@ import { SphereComponent } from './Learning/sphere/sphere.component';
     MyComponentComponent,
     CircleComponent,
     SidebarComponent,
-    SphereComponent
+    SphereComponent,
+    AtomicStructureComponent
 
   ],
   imports: [

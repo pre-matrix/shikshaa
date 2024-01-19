@@ -7,6 +7,7 @@ import { UserlistingComponent } from './userlisting/userlisting.component';
 import { AuthGuard } from './guard/auth.guard';
 import { CircleComponent } from './Learning/circle/circle.component';
 import { SphereComponent } from './Learning/sphere/sphere.component';
+import { AtomicStructureComponent } from './Learning/atomic-structure/atomic-structure.component';
 
 
 
@@ -17,7 +18,7 @@ const routes: Routes = [
   {path:'user', component:UserlistingComponent, canActivate:[AuthGuard]},
   {path:'circle', component:CircleComponent},
   {path:'sphere', component:SphereComponent},
-  
+  {path: 'atom', component:AtomicStructureComponent}
  
 ];
 
