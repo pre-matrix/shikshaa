@@ -10,6 +10,7 @@ import { Component } from '@angular/core';
   
 })
 export class HomeComponent {
+[x: string]: any;
 
   currentComponent: string = 'my-component';
   isCubeOn: boolean = true;
