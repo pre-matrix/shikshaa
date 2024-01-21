@@ -150,50 +150,50 @@
     }
 
     function updateInfoDivPosition(electron, einfoDiv) {
-    var electronWorldPosition = new THREE.Vector3();
-    electron.getWorldPosition(electronWorldPosition);
+      var electronWorldPosition = new THREE.Vector3();
+      electron.getWorldPosition(electronWorldPosition);
 
-    var screenCoordinates = electronWorldPosition.project(camera);
+      var screenCoordinates = electronWorldPosition.project(camera);
 
-    var x = (screenCoordinates.x + 1) * window.innerWidth / 2;
-    var y = (-screenCoordinates.y + 1) * window.innerHeight / 2;
+      var x = (screenCoordinates.x + 1) * window.innerWidth / 2;
+      var y = (-screenCoordinates.y + 1) * window.innerHeight / 2;
 
-    einfoDiv.classList.add('info');
-    einfoDiv.style.left = (x + 28) + 'px';
-    einfoDiv.style.top = (y - 20) + 'px';
-    einfoDiv.style.transform = `scale(${1 / camera.zoom})`; // Adjust for zoom
-  }
+      einfoDiv.classList.add('info');
+      einfoDiv.style.left = (x + 28) + 'px';
+      einfoDiv.style.top = (y - 20) + 'px';
+      einfoDiv.style.transform = `scale(${1 / camera.zoom})`; // Adjust for zoom
+    }
 
-  
-  function updateNutronInfoDivPosition(nutron, ninfoDiv) {
-  var nutronWorldPosition = new THREE.Vector3();
-  nutron.getWorldPosition(nutronWorldPosition);
 
-  var nscreenCoordinates = nutronWorldPosition.project(camera);
+    function updateNutronInfoDivPosition(nutron, ninfoDiv) {
+      var nutronWorldPosition = new THREE.Vector3();
+      nutron.getWorldPosition(nutronWorldPosition);
 
-  var x = (nscreenCoordinates.x + 1) * window.innerWidth / 2;
-  var y = (-nscreenCoordinates.y + 1) * window.innerHeight / 2;
+      var nscreenCoordinates = nutronWorldPosition.project(camera);
 
-  ninfoDiv.classList.add('info');
-  ninfoDiv.style.left = (x - 30) + 'px';
-  ninfoDiv.style.top = (y - 18) + 'px';
-  ninfoDiv.style.transform = `scale(${1 / camera.zoom})`; // Adjust for zoom
-}
+      var x = (nscreenCoordinates.x + 1) * window.innerWidth / 2;
+      var y = (-nscreenCoordinates.y + 1) * window.innerHeight / 2;
 
-  function updateProtonInfoDivPosition(proton, pinfoDiv) {
-    var protonWorldPosition = new THREE.Vector3();
-    proton.getWorldPosition(protonWorldPosition);
+      ninfoDiv.classList.add('info');
+      ninfoDiv.style.left = (x - 30) + 'px';
+      ninfoDiv.style.top = (y - 18) + 'px';
+      ninfoDiv.style.transform = `scale(${1 / camera.zoom})`; // Adjust for zoom
+    }
 
-    var pscreenCoordinates = protonWorldPosition.project(camera);
+    function updateProtonInfoDivPosition(proton, pinfoDiv) {
+      var protonWorldPosition = new THREE.Vector3();
+      proton.getWorldPosition(protonWorldPosition);
 
-    var x = (pscreenCoordinates.x + 1) * window.innerWidth / 2;
-    var y = (-pscreenCoordinates.y + 1) * window.innerHeight / 2;
+      var pscreenCoordinates = protonWorldPosition.project(camera);
 
-    pinfoDiv.classList.add('info');
-    pinfoDiv.style.left = (x - 30) + 'px';
-    pinfoDiv.style.top = (y + 80) + 'px';
-    pinfoDiv.style.transform = `scale(${1 / camera.zoom})`; // Adjust for zoom
-  }
+      var x = (pscreenCoordinates.x + 1) * window.innerWidth / 2;
+      var y = (-pscreenCoordinates.y + 1) * window.innerHeight / 2;
+
+      pinfoDiv.classList.add('info');
+      pinfoDiv.style.left = (x - 30) + 'px';
+      pinfoDiv.style.top = (y + 80) + 'px';
+      pinfoDiv.style.transform = `scale(${1 / camera.zoom})`; // Adjust for zoom
+    }
 
     function createProtons() {
       for (let i = 0; i < 8; i++) {
@@ -238,6 +238,28 @@
         var clickedParticle = intersects[0].object;
         console.log("Clicked on particle:", clickedParticle.myName);
         clickedParticle.material.color.set(Math.random() * 0xffffff);
+
+        // Add Web Speech API
+        var particleType = "";
+
+        // directly checks the type of the clicked particle within the click event handler
+
+        if (clickedParticle.myName && clickedParticle.myName.startsWith("p")) {
+          particleType = "Proton";
+
+        } else if (clickedParticle.myName && clickedParticle.myName.startsWith("n")) {
+          particleType = "Neutron";
+
+        } else {
+          particleType = "Electron";
+
+        }
+
+
+
+        const synth = window.speechSynthesis;
+        var utterance = new SpeechSynthesisUtterance("Clicked on " + particleType);
+        synth.speak(utterance);
       }
     }, false);
 
@@ -246,25 +268,25 @@
 
     camera.position.z = 30;
 
-// Set up a radial gradient background from grey to dark grey
-var gradientCanvas = document.createElement('canvas');
-var gradientContext = gradientCanvas.getContext('2d');
-gradientCanvas.width = 256;
-gradientCanvas.height = 256;
+    // Set up a radial gradient background from grey to dark grey
+    var gradientCanvas = document.createElement('canvas');
+    var gradientContext = gradientCanvas.getContext('2d');
+    gradientCanvas.width = 256;
+    gradientCanvas.height = 256;
 
-var gradient = gradientContext.createRadialGradient(
-  gradientCanvas.width / 2, gradientCanvas.height / 2, 0,
-  gradientCanvas.width / 2, gradientCanvas.height / 2, gradientCanvas.width / 2
-);
+    var gradient = gradientContext.createRadialGradient(
+      gradientCanvas.width / 2, gradientCanvas.height / 2, 0,
+      gradientCanvas.width / 2, gradientCanvas.height / 2, gradientCanvas.width / 2
+    );
 
-gradient.addColorStop(0, 'rgba(48, 48, 48, 1)'); // Grey color
-gradient.addColorStop(1, 'rgba(12, 12, 12, 1)');   // Dark grey color
+    gradient.addColorStop(0, 'rgba(48, 48, 48, 1)'); // Grey color
+    gradient.addColorStop(1, 'rgba(12, 12, 12, 1)');   // Dark grey color
 
-gradientContext.fillStyle = gradient;
-gradientContext.fillRect(0, 0, gradientCanvas.width, gradientCanvas.height);
+    gradientContext.fillStyle = gradient;
+    gradientContext.fillRect(0, 0, gradientCanvas.width, gradientCanvas.height);
 
-var gradientTexture = new THREE.CanvasTexture(gradientCanvas);
-scene.background = gradientTexture;
+    var gradientTexture = new THREE.CanvasTexture(gradientCanvas);
+    scene.background = gradientTexture;
 
     var controls = new THREE.OrbitControls(camera, renderer.domElement);
     controls.minDistance = 1;
@@ -301,7 +323,7 @@ scene.background = gradientTexture;
 
     var gui = new dat.GUI();
     var labelControls = {
-      showNucleusLabels : true,
+      showNucleusLabels: true,
       showElectronLabels: true,
       showProtonLabels: true,
       showNeutronLabels: true,
@@ -312,7 +334,7 @@ scene.background = gradientTexture;
       nucleus.children.forEach(function (particle) {
         if (particle.myName && particle.myName.startsWith("p")) {
           particle.visible = value;
-          
+
         }
       });
       nucleus.children.forEach(function (particle) {
@@ -347,7 +369,7 @@ scene.background = gradientTexture;
       });
     });
 
-    
+
     gui.add(labelControls, 'playPauseLabels').name('Play Pause').onChange(function () {
       toggleAnimation();
     });
@@ -374,8 +396,8 @@ scene.background = gradientTexture;
         electronGroup1s.rotation.x += 0.01;
         electronGroup1s.rotation.y += 0.01;
 
-        electronGroup2s.rotation.x += 0.001;
-        electronGroup2s.rotation.z += 0.001;
+        // electronGroup2s.rotation.x += 0.001;
+        // electronGroup2s.rotation.y += 0.001;
         electronGroup2s.rotation.z += 0.001;
 
         controls.update();
@@ -399,6 +421,9 @@ scene.background = gradientTexture;
     }
 
     animate();
+
+
+
   </script>
 </body>
 

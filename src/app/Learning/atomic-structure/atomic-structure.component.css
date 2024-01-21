@@ -1,11 +1,24 @@
-present {
-    font-family: 'Arial', sans-serif;
-    line-height: 1.6;
-    margin: 20px;
-    padding: 0;
-    background: linear-gradient(to right, #4b6cb7, #182848);
-    color: #fff;
-    width: 100vw;
-    height: 100vh;
-}
+* {
+    margin: 0;
+    overflow: hidden;
+  }
 
+  canvas {
+    display: block;
+  }
+
+  .info {
+    position: absolute;
+    padding: 4px;
+    font-size: 12px;
+    font-family: 'poppins', sans-serif;
+    font-weight: 700;
+    width: fit-content;
+    text-align: center;
+    z-index: 100;
+    display: block;
+    color: aliceblue;
+    background-color: rgba(240, 248, 255, 0.254);
+    border: solid 2px #767676;
+    border-radius: 5px;
+  }
