@@ -26,6 +26,8 @@ export class MyComponentComponent implements OnInit, AfterViewInit {
   constructor(private ngZone: NgZone, private render: Renderer2, private el: ElementRef) {}
 
   ngOnInit(): void {
+
+   
     // Access the container element
     const container = this.el.nativeElement.querySelector('#myCanvas');
     if (container) {
@@ -35,6 +37,8 @@ export class MyComponentComponent implements OnInit, AfterViewInit {
       console.error('Container element not found.');
     }
   }
+
+
 
   ngAfterViewInit(): void {
     // You can add any additional setup code here
@@ -92,6 +96,7 @@ export class MyComponentComponent implements OnInit, AfterViewInit {
   }
 
   animate() {
+    this.onWindowResize();
     this.ngZone.run(() => {
       this.cube.rotation.x += 0.01;
       this.cube.rotation.y += 0.01;
@@ -99,5 +104,11 @@ export class MyComponentComponent implements OnInit, AfterViewInit {
     });
 
     requestAnimationFrame(() => this.animate());
+  }
+
+  private onWindowResize(): void {
+    this.camera.aspect = window.innerWidth / window.innerHeight;
+    this.camera.updateProjectionMatrix();
+    this.renderer.setSize(window.innerWidth, window.innerHeight);
   }
 }

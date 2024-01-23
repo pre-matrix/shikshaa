@@ -4,23 +4,52 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Atomic Structure - Oxygen</title>
+  <title>Atomic Structure</title>
   <style>
     body {
       margin: 0;
       overflow: hidden;
+      font-family: roboto;
+      font-weight: 200;
     }
 
     canvas {
       display: block;
+      width: fit-content;
+
+    }
+
+    #instructions {
+      position: absolute;
+      display: block;
+      margin-top: 0px;
+      background-color: #1f1f1f;
+      padding: 0.5vw 1vw;
+      color: aliceblue;
+      font-size: small;
+      line-height: 85%;
+    }
+
+    #box {
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    #box button {
+      height: fit-content;
+      margin-top: 0%;
+    }
+
+    #box p {
+      font-size: medium;
+      font-weight: 400;
     }
 
     .info {
       position: absolute;
       padding: 4px;
-      font-size: 12px;
-      font-family: 'poppins', sans-serif;
-      font-weight: 700;
       width: fit-content;
       text-align: center;
       z-index: 100;
@@ -41,11 +70,30 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.7/dat.gui.min.js"></script>
 
   <!-- dom text elements -->
+  <div id="instructions">
+
+    
+    <div id="box">
+      <p>Instructions:</p>
+      <button onclick="inst()">close</button>
+    </div>
+    <p>Click and drag to rotate the model</p>
+    <p>Clikc on the particles to identify particle</p>
+    <p>Use mouse scroll to zoom in and zoom out</p>
+ 
+  </div>
+
   <div id="einfo">electrons</div>
   <div id="ninfo">neutrons</div>
   <div id="pinfo">protons</div>
 
   <script>
+
+    function inst() {
+      document.getElementById("instructions").style.visibility = 'hidden';
+    }
+
+
     var isPaused = false;
 
     function toggleAnimation() {

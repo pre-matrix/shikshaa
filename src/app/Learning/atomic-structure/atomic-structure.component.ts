@@ -60,6 +60,7 @@ export class AtomicStructureComponent implements OnInit, OnDestroy {
     this.setupControls();
     this.setupClickEvents();
     this.animate();
+    this.onWindowResize();
   }
 
   ngOnDestroy(): void {

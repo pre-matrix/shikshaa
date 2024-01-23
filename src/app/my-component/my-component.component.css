@@ -6,6 +6,7 @@ body {
   }
 .cube {
     position: absolute;
+    margin-left: 1vw;
     display: flex;
     justify-content: center;
     align-items: center;

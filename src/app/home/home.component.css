@@ -1,3 +1,4 @@
+
 .main {
     margin: 0;
     background: black;
@@ -5,6 +6,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    user-select: none;
   }
   
   .container {
@@ -54,8 +56,8 @@
   }
   .button {
     display: inline-block;
-    font-size: 16px;
-    font-weight: bold;
+    font-size: 1vw;
+    /* font-weight: bold; */
     padding: 15px;
     margin-left:20px;
     margin-right:20px;
@@ -67,6 +69,7 @@
   }
 
   .backbutton {
+    font-size: 4vw;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -74,10 +77,16 @@
 
   
 a {
-  font-weight: 200;
-  
+  font-weight: 100;
+  font-size: 1vw;
   color: aliceblue;
   text-decoration: none;
   text-decoration-style: none;
   stroke: none;
+}
+
+.heading {
+  font-size: 4vw;
+  padding:20px;
+  align-items: center;
 }
