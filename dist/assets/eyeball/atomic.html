@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Atomic Structure - Oxygen</title>
+  <title>Atomic Structure</title>
   <style>
     body {
       margin: 0;
@@ -16,10 +16,13 @@
     canvas {
       display: block;
       width: fit-content;
-
     }
+#parent {
+  position: relative;
+}
 
-    #instructions {
+    #container {
+      
       position: absolute;
       display: block;
       margin-top: 0px;
@@ -28,36 +31,59 @@
       color: aliceblue;
       font-size: small;
       line-height: 85%;
+      border: 1px solid #767676;
     }
 
-    #box {
+    #inst {
       position: relative;
       display: flex;
+      flex-direction: column;
       justify-content: space-between;
-      align-items: center;
+      align-items: left;
     }
 
-    #box button {
+    /* #box button {
       height: fit-content;
       margin-top: 0%;
-    }
+    } */
 
-    #box p {
-      font-size: medium;
+    #inst p {
+      font-size: small;
       font-weight: 400;
     }
 
     .info {
+      display: none;
       position: absolute;
-      padding: 4px;
-      width: fit-content;
+      top: 0;
+      bottom: 1;
+      left: 0;
+      right: 0;
+      margin: auto;
+      padding: 2px;
+      width: 50%;
+      height: max-content;
       text-align: center;
-      z-index: 100;
-      display: block;
       color: aliceblue;
-      background-color: rgba(240, 248, 255, 0.254);
+      background: rgba(82, 178, 207, 0.579);
+      font-size: 30px;
       border: solid 2px #767676;
       border-radius: 5px;
+    }
+
+    .pagetitle {
+      padding: 0;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 30px;
+      background-color: #fe6262;
+    }
+
+    .page {
+      color: aliceblue;
     }
   </style>
 </head>
@@ -68,31 +94,44 @@
   <script type="text/javascript" src='./js/FlakesTexture.js'></script>
   <script type="text/javascript" src='./js/RGBELoader.js'></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.7/dat.gui.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/speechSynthesis/0.1.1/speechSynthesis.min.js"></script>
 
   <!-- dom text elements -->
-  <div id="instructions">
-
-    
-    <div id="box">
-      <p>Instructions:</p>
-      <button onclick="inst()">close</button>
+<div id="parent">
+  <div id="container">
+    <div class="pagetitle">
+      <h3 class="page">ATOMIC STRUCTURE</h3>
     </div>
-    <p>Click and drag to rotate the model</p>
-    <p>Clikc on the particles to identify particle</p>
-    <p>Use mouse scroll to zoom in and zoom out</p>
- 
-  </div>
 
-  <div id="einfo">electrons</div>
-  <div id="ninfo">neutrons</div>
-  <div id="pinfo">protons</div>
+    <div id="inst">
+      <p>Instructions:</p>
+      <!-- <button onclick="inst()">close</button> -->
+      <p>Click and drag to rotate the model</p>
+      <p>Click on the particles to identify particle</p>
+    </div>
+  </div>
+  <!-- information of particles -->
+  <div id="einfo" class="info">
+    <p>Electrons are negatively charged particles that </br>rotate around the nucleus in specific orbits</p>
+  </div>
+  <div id="ninfo" class="info">Neutrons are neutral in charge and present in nucleus</div>
+  <div id="pinfo" class="info">Protons are positively charged particles and present in nucleus</div>
+</div>
+
 
   <script>
+    //instructions to the user
+    // function inst() {
+    //   document.getElementById("instructions").style.visibility = 'hidden';
+    // }
 
-    function inst() {
-      document.getElementById("instructions").style.visibility = 'hidden';
-    }
+    //onload instructions
 
+    // window.onload = function read(){
+    //   const onloadSynth = window.speechSynthesis;
+    //     var readInst = new SpeechSynthesisUtterance("Click and drag to rotate the model, Click on the particles to identify particle, Scroll to zoom in and zoom out");
+    //     onloadSynth.speak(readInst);
+    // }
 
     var isPaused = false;
 
@@ -107,7 +146,7 @@
 
     var scene = new THREE.Scene();
     var camera = new THREE.PerspectiveCamera(15, window.innerWidth / window.innerHeight, 0.1, 1000);
-    var renderer = new THREE.WebGLRenderer();
+    var renderer = new THREE.WebGLRenderer({ scene, alpha: true, antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
 
@@ -197,23 +236,25 @@
       }
     }
 
-    function updateInfoDivPosition(electron, einfoDiv) {
-      var electronWorldPosition = new THREE.Vector3();
-      electron.getWorldPosition(electronWorldPosition);
+    // assigning electron position to einfodiv
+    /*     function updateInfoDivPosition(electron, einfoDiv) {
+          var electronWorldPosition = new THREE.Vector3();
+          electron.getWorldPosition(electronWorldPosition);
+    
+          var screenCoordinates = electronWorldPosition.project(camera);
+    
+          var x = (screenCoordinates.x + 1) * window.innerWidth / 2;
+          var y = (-screenCoordinates.y + 1) * window.innerHeight / 2;
+    
+          einfoDiv.classList.add('info');
+           einfoDiv.style.left = (x + 28) + 'px';
+           einfoDiv.style.top = (y - 20) + 'px';
+          scale the div to be smaller when zoomed in
+           einfoDiv.style.transform = `scale(${1 / camera.zoom})`; // Adjust for zoom
+        } */
 
-      var screenCoordinates = electronWorldPosition.project(camera);
 
-      var x = (screenCoordinates.x + 1) * window.innerWidth / 2;
-      var y = (-screenCoordinates.y + 1) * window.innerHeight / 2;
-
-      einfoDiv.classList.add('info');
-      einfoDiv.style.left = (x + 28) + 'px';
-      einfoDiv.style.top = (y - 20) + 'px';
-      einfoDiv.style.transform = `scale(${1 / camera.zoom})`; // Adjust for zoom
-    }
-
-
-    function updateNutronInfoDivPosition(nutron, ninfoDiv) {
+    /* function updateNutronInfoDivPosition(nutron, ninfoDiv) {
       var nutronWorldPosition = new THREE.Vector3();
       nutron.getWorldPosition(nutronWorldPosition);
 
@@ -226,7 +267,34 @@
       ninfoDiv.style.left = (x - 30) + 'px';
       ninfoDiv.style.top = (y - 18) + 'px';
       ninfoDiv.style.transform = `scale(${1 / camera.zoom})`; // Adjust for zoom
-    }
+    } */
+
+    // // Function to update font size based on zoom
+    // function updateTextFontSize(einfoDiv,ninfoDiv, pinfoDiv , zoom) {
+    //   var einfoDiv = document.getElementById('einfo');
+    //   var ninfoDiv = document.getElementById('ninfo');
+    //   var pinfoDiv = document.getElementById('pinfo');
+
+    //   if (einfoDiv!== null ) {
+    //     // Adjust the base font size and scale it based on the camera zoom
+    //     const baseFontSize = 12;
+    //     const scaledFontSize = baseFontSize * zoom;
+    //     einfoDiv.style.fontSize = scaledFontSize + 'px';
+    //   }
+    //   else if (ninfoDiv!== null) {
+    //     const baseFontSize = 12;
+    //     const scaledFontSize = baseFontSize * zoom;
+    //     ninfoDiv.style.fontSize = scaledFontSize + 'px';
+    //   }
+
+    //   else if(pinfoDiv!== null) {
+    //     const baseFontSize = 12;
+    //     const scaledFontSize = baseFontSize * zoom;
+    //     pinfoDiv.style.fontSize = scaledFontSize + 'px';
+    //   }
+    // }
+
+
 
     function updateProtonInfoDivPosition(proton, pinfoDiv) {
       var protonWorldPosition = new THREE.Vector3();
@@ -271,7 +339,11 @@
     createElectron(eMaterial, 1.5, 2, electronGroup1s);
     createElectron(eMaterial, 3, 8, electronGroup2s);
 
+    var lastIntersectedParticle = null;
+
     renderer.domElement.addEventListener('click', function (event) {
+
+
       var mouse = new THREE.Vector2(
         (event.clientX / window.innerWidth) * 2 - 1,
         -(event.clientY / window.innerHeight) * 2 + 1
@@ -284,7 +356,7 @@
 
       if (intersects.length > 0) {
         var clickedParticle = intersects[0].object;
-        console.log("Clicked on particle:", clickedParticle.myName);
+        // console.log("Clicked on particle:", clickedParticle.myName);
         clickedParticle.material.color.set(Math.random() * 0xffffff);
 
         // Add Web Speech API
@@ -294,27 +366,61 @@
 
         if (clickedParticle.myName && clickedParticle.myName.startsWith("p")) {
           particleType = "Proton";
-
+          document.getElementById('pinfo').style.display = "block";
+          document.getElementById('ninfo').style.display = "none";
+          document.getElementById('einfo').style.display = "none";
         } else if (clickedParticle.myName && clickedParticle.myName.startsWith("n")) {
           particleType = "Neutron";
-
+          document.getElementById('ninfo').style.display = "block";
+          document.getElementById('pinfo').style.display = "none";
+          document.getElementById('einfo').style.display = "none";
         } else {
           particleType = "Electron";
-
+          document.getElementById('einfo').style.display = "block";
+          document.getElementById('pinfo').style.display = "none";
+          document.getElementById('ninfo').style.display = "none";
         }
-
-
-
-        const synth = window.speechSynthesis;
-        var utterance = new SpeechSynthesisUtterance("Clicked on " + particleType);
-        synth.speak(utterance);
+        //on click speech
+        /*         const synth = speechSynthesis;
+                var utterance = new SpeechSynthesisUtterance("Clicked on " + particleType);
+                synth.speak(utterance); */
       }
+
+      // hover on particle
+
+
+      //         if(intersects.length>0){
+      //     if (lastIntersectedParticle) {
+      //         lastIntersectedParticle.material.color.set("red");
+      //     }
+      //     lastIntersectedParticle = intersects[0].object;
+      //     lastIntersectedParticle.material.color.set("white");
+
+      //     if (lastIntersectedParticle.myName && lastIntersectedParticle.myName.startsWith("p")) {
+      //         particleType = "Proton";
+      //     }
+      //     else if (lastIntersectedParticle.myName && lastIntersectedParticle.myName.startsWith("n")) {
+      //         particleType = "Neutron";
+      //     } 
+      //     else {
+      //         particleType = "Electron";
+      //     }
+      // }
+      // else if(lastIntersectedParticle){
+      //     nucleus.children.nutron.material.color.set(0X9840);
+      //     nucleus.children.proton.material.color.set(0X8418ca);
+      //     electronGroup1s.material.color.set(0Xff5050);
+      //     electronGroup2s.material.color.set(0Xff5050);
+      //     lastIntersectedParticle = null;
+      // }
+
+
     }, false);
 
     nucleus.add(electronGroup1s, electronGroup2s);
     scene.add(nucleus);
 
-    camera.position.z = 30;
+    camera.position.set(0, 0, 2.5);
 
     // Set up a radial gradient background from grey to dark grey
     var gradientCanvas = document.createElement('canvas');
@@ -337,8 +443,8 @@
     scene.background = gradientTexture;
 
     var controls = new THREE.OrbitControls(camera, renderer.domElement);
-    controls.minDistance = 1;
-    controls.maxDistance = 30;
+    controls.minDistance = 25;
+    controls.maxDistance = 25;
 
 
 
@@ -379,15 +485,21 @@
     };
 
     gui.add(labelControls, 'showNucleusLabels').name('Show Nucleus Labels').onChange(function (value) {
+      var pinfoDiv = document.getElementById('pinfo');
       nucleus.children.forEach(function (particle) {
         if (particle.myName && particle.myName.startsWith("p")) {
           particle.visible = value;
+
+
+
 
         }
       });
       nucleus.children.forEach(function (particle) {
         if (particle.myName && particle.myName.startsWith("n")) {
           particle.visible = value;
+          var ninfoDiv = document.getElementById('ninfo');
+
         }
       });
     });
@@ -418,7 +530,7 @@
     });
 
 
-    gui.add(labelControls, 'playPauseLabels').name('Play Pause').onChange(function () {
+    gui.add(labelControls, 'playPauseLabels').name('Play / Pause').onChange(function () {
       toggleAnimation();
     });
 
@@ -426,20 +538,31 @@
       if (!isPaused) {
         requestAnimationFrame(animate);
 
-        electronGroup2s.children.forEach(function (electron) {
-          var einfoDiv = document.getElementById('einfo');
-          updateInfoDivPosition(electron, einfoDiv);
-        });
+        // Update font size based on camera zoom
+        // updateTextFontSize(document.getElementById('einfo'), camera.zoom);
+        // updateTextFontSize(document.getElementById('ninfo'), camera.zoom);
+        // updateTextFontSize(document.getElementById('pinfo'), camera.zoom);
 
-        nucleus.children.forEach(function (nutron) {
-          var ninfoDiv = document.getElementById('ninfo');
-          updateNutronInfoDivPosition(nutron, ninfoDiv);
-        });
+        // electronGroup1s.children.forEach(function (electron) {
+        //   var einfoDiv = document.getElementById('einfo');
+        //   updateInfoDivPosition(electron, einfoDiv);
+        //   einfoDiv.style.position = 'absolute';
+        //   // updateTextFontSize(einfoDiv, camera.zoom);
+        // });
 
-        nucleus.children.forEach(function (proton) {
-          var pinfoDiv = document.getElementById('pinfo');
-          updateProtonInfoDivPosition(proton, pinfoDiv);
-        });
+        // nucleus.children.forEach(function (nutron) {
+        //   var ninfoDiv = document.getElementById('ninfo');
+        //   updateNutronInfoDivPosition(nutron, ninfoDiv);
+        //   ninfoDiv.style.position = 'absolute';
+        //   // updateTextFontSize(ninfoDiv, camera.zoom);
+        // });
+
+        // nucleus.children.forEach(function (proton) {
+        //   var pinfoDiv = document.getElementById('pinfo');
+        //   updateProtonInfoDivPosition(proton, pinfoDiv);
+        //   pinfoDiv.style.position = 'absolute';
+        //   // updateTextFontSize(pinfoDiv, camera.zoom);
+        // });
 
         electronGroup1s.rotation.x += 0.01;
         electronGroup1s.rotation.y += 0.01;
@@ -453,14 +576,6 @@
       }
     };
 
-    var einfoDiv = document.getElementById('einfo');
-    einfoDiv.style.position = 'absolute';
-
-    var ninfoDiv = document.getElementById('ninfo');
-    ninfoDiv.style.position = 'absolute';
-
-    var pinfoDiv = document.getElementById('pinfo');
-    pinfoDiv.style.position = 'absolute';
 
     function onWindowResize() {
       camera.aspect = window.innerWidth / window.innerHeight;

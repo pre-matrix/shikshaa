@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atom Builder</title>
+    <style>
+        /* CSS styling for Three.js canvas */
+        #container {
+            width: 800px;
+            height: 600px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Three.js Canvas Container -->
+    <div id="container"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // Three.js setup
+        let scene, camera, renderer;
+
+        function init() {
+            scene = new THREE.Scene();
+
+            // Set up camera
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 5;
+
+            // Set up renderer
+            renderer = new THREE.WebGLRenderer();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            document.getElementById('container').appendChild(renderer.domElement);
+
+            // Particle models tray
+            const particleTray = createParticleTray();
+            scene.add(particleTray);
+
+            // Stage area
+            const stage = createStage();
+            scene.add(stage);
+
+            // Event listeners for drag and drop
+            renderer.domElement.addEventListener('mousedown', onDocumentMouseDown);
+            renderer.domElement.addEventListener('mousemove', onDocumentMouseMove);
+            renderer.domElement.addEventListener('mouseup', onDocumentMouseUp);
+        }
+
+        function createParticleTray() {
+            const tray = new THREE.Group();
+
+            // Create particle models (spheres) and position them in the tray
+            const neutron = createParticleModel(0xaaaaaa);
+            neutron.position.set(-2, 0, 0);
+            tray.add(neutron);
+
+            const proton = createParticleModel(0xff0000);
+            proton.position.set(0, 0, 0);
+            tray.add(proton);
+
+            const electron = createParticleModel(0x0000ff);
+            electron.position.set(2, 0, 0);
+            tray.add(electron);
+
+            return tray;
+        }
+
+        function createParticleModel(color) {
+            const geometry = new THREE.SphereGeometry(0.2, 32, 32);
+            const material = new THREE.MeshBasicMaterial({ color });
+            return new THREE.Mesh(geometry, material);
+        }
+
+        function createStage() {
+            const stage = new THREE.Group();
+
+            // Create nucleus and orbits
+            const nucleus = createParticleModel(0x00ff00);
+            stage.add(nucleus);
+
+            const orbit1 = createOrbit(1);
+            stage.add(orbit1);
+
+            const orbit2 = createOrbit(2);
+            stage.add(orbit2);
+
+            const orbit3 = createOrbit(3);
+            stage.add(orbit3);
+
+            const orbit4 = createOrbit(4);
+            stage.add(orbit4);
+
+            return stage;
+        }
+
+        function createOrbit(radius) {
+            const geometry = new THREE.RingGeometry(radius - 0.1, radius + 0.1, 64);
+            const material = new THREE.MeshBasicMaterial({ color: 0xffffff, side: THREE.DoubleSide });
+            const orbit = new THREE.Mesh(geometry, material);
+            return orbit;
+        }
+
+        function onDocumentMouseDown(event) {
+            // Implement drag and drop logic here
+        }
+
+        function onDocumentMouseMove(event) {
+            // Implement drag and drop logic here
+        }
+
+        function onDocumentMouseUp(event) {
+            // Implement drag and drop logic here
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            renderer.render(scene, camera);
+        }
+
+        // Initialize and start animation
+        init();
+        animate();
+    </script>
+</body>
+
+</html>

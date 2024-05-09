@@ -1,7 +1,7 @@
 
 <!-- <app-sidebar></app-sidebar> -->
 <!-- Toolbar -->
-<mat-toolbar class="toolbar" role="banner" *ngIf="isMenuRequire">
+<mat-toolbar class="toolbar tooltext" role="banner" *ngIf="isMenuRequire">
   <img height="40" alt="Shikshaa Logo" src="../assets/Shikshaa_logo_white.svg" />
   <p *ngIf="userName" >Welcome, {{ userName }}</p>
   <div id="menu">
@@ -19,8 +19,8 @@
 
   <div class="spacer"></div>
 
-  <button  routerLink="/login" mat-flat-button color="basic">Logout</button>
-  <a
+  <button class="tooltext" routerLink="/login" mat-flat-button color="basic">Logout</button>
+  <!-- <a
     aria-label="Angular on twitter"
     target="_blank"
     rel="noopener"
@@ -62,7 +62,7 @@
         d="M21.58 7.19c-.23-.86-.91-1.54-1.77-1.77C18.25 5 12 5 12 5s-6.25 0-7.81.42c-.86.23-1.54.91-1.77 1.77C2 8.75 2 12 2 12s0 3.25.42 4.81c.23.86.91 1.54 1.77 1.77C5.75 19 12 19 12 19s6.25 0 7.81-.42c.86-.23 1.54-.91 1.77-1.77C22 15.25 22 12 22 12s0-3.25-.42-4.81zM10 15V9l5.2 3-5.2 3z"
       />
     </svg>
-  </a>
+  </a> -->
 </mat-toolbar>
 
 <router-outlet></router-outlet>

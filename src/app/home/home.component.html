@@ -1,25 +1,29 @@
-<app-my-component *ngIf="currentComponent === 'my-component'"></app-my-component>
+<!-- <app-my-component *ngIf="currentComponent === 'my-component'"></app-my-component> -->
 <!-- <app-circle *ngIf="currentComponent === 'circle-component'"></app-circle> -->
 <app-sphere *ngIf="currentComponent === 'sphere-component'"></app-sphere>
-<!-- <app-atomic-structure *ngIf="currentComponent === 'atom-component'"></app-atomic-structure> --> 
+<!-- <app-atomic-structure *ngIf="currentComponent === 'atom-component'"></app-atomic-structure> -->
 <!-- not completed -->
 
 
 <div class="main" *ngIf="isCubeOn">
-    <div class="container">
-      <div class="text-box">
-        <div class="heading">To infinity and Beyond</div>
-        <div class="button-wrapper">
-          <!-- <div class="button" (click)="switchToCircleComponent()">Circle</div> -->
-          <div class="button" (click)="switchToSphereComponent()">Atom</div>
-          <button ejs-button class="button a" cssClass=' e-block'><a href="https://shikshaa.my.canva.site/e-learning" target="_blank">PRESENTATION</a></button>
-        </div>
+  <div id="youtube">
+    <iframe width="1280" height="720" src="https://www.youtube.com/embed/lDf6UEV-Vmo?rel=0;controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; modestbranding; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+  </div>
+  <div class="container">
+
+    
+    <div class="text-box">
+      <!-- <div class="heading">The Flow of Learning</div> -->
+      <div class="button-wrapper">
+        <!-- <div class="button" (click)="switchToCircleComponent()">Circle</div> -->
+        <button ejs-button class="button a" (click)="switchToSphereComponent()"> <a>Atom</a></button>
+        <button ejs-button class="button a"><a href="https://shikshaa.my.canva.site/e-learning"
+            target="_blank">PRESENTATION</a></button>
       </div>
     </div>
-    <script src="../../assets/three.min.js"></script>
   </div>
-<div class="backbutton">
-  <button  mat-button (click)="switchToMyComponent()" *ngIf="isBackbut">Back</button>
+  <script src="../../assets/three.min.js"></script>
 </div>
-
-
+<div class="backbutton">
+  <button mat-button (click)="switchToMyComponent()" *ngIf="isBackbut">Back</button>
+</div>

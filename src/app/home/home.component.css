@@ -1,21 +1,25 @@
 
+
 .main {
+  display: flex;
+  flex-direction: column;
     margin: 0;
-    background: black;
+    padding:0;
+    width: 100%;
+    background: rgb(255, 255, 255);
     overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
-    user-select: none;
   }
   
   .container {
-    width: 99vw;
-    height: 98vh;
+    /*     width: 99vw;
+    height: 70vh;
     background-image: url('/assets/galaxy_bigstar.png');
-    background-size: 10%;
+    background-size: 20vh;
     background-repeat: no-repeat;
-    background-position: center;
+    background-position: center; */
     opacity: 50%;
     overflow: hidden;
     display: flex;
@@ -31,6 +35,16 @@
     
     
   }
+
+  #youtube {
+    position: relative;
+    margin-top: 50px;
+    padding:20px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   .text-box {
     overflow: hidden;
     display: flex;
@@ -43,7 +57,7 @@
     letter-spacing: 7px;
     word-spacing: 12px;
     text-transform: uppercase;
-    color:rgb(238, 238, 238);
+    color:rgb(253, 216, 0);
     -webkit-text-fill-color:color-mix(in srgb-linear, #a70c0c percentage, #f30ad800 percentage);
     -webkit-text-stroke-width: 2px;
   }

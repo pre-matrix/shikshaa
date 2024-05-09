@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atom Builder</title>
+    <style>
+     body {
+      margin: 0;
+      overflow: hidden;
+      font-family: roboto;
+      font-weight: 200;
+    }
+
+    canvas {
+      display: block;
+      width: fit-content;
+
+    }
+#parent {
+  position: relative;
+}
+
+    #container {
+      
+      position: absolute;
+      display: block;
+      margin-top: 0px;
+      background-color: #1f1f1f;
+      padding: 0.5vw 1vw;
+      color: aliceblue;
+      font-size: small;
+      line-height: 85%;
+      border: 1px solid #767676;
+    }
+
+
+
+
+    .pagetitle {
+      padding: 0;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 30px;
+      background-color: #fe6262;
+    }
+
+    .page {
+      color: aliceblue;
+    }
+    </style>
+</head>
+
+<body>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/87/three.min.js"></script>
+  <script type="text/javascript" src='./js/OrbitControls.js'></script>
+  <script type="text/javascript" src='./js/FlakesTexture.js'></script>
+  <script type="text/javascript" src='./js/RGBELoader.js'></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.7/dat.gui.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/speechSynthesis/0.1.1/speechSynthesis.min.js"></script>
+
+    <!-- dom text elements -->
+<div id="parent">
+    <div id="container">
+      <div class="pagetitle">
+        <h3 class="page">ATOMIC STRUCTURE</h3>
+      </div>
+  
+
+<script>
+  
+        window.addEventListener('resize', onWindowResize);
+
+    var scene = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera(15, window.innerWidth / window.innerHeight, 0.1, 1000);
+    var renderer = new THREE.WebGLRenderer({ scene, alpha: true, antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+
+    var ambientLight = new THREE.AmbientLight(0x404040, 3);
+    scene.add(ambientLight);
+
+    var spotLight = new THREE.SpotLight(0xffffff, 0.3);
+    spotLight.position.set(
+      camera.position.x + 10, camera.position.y + 10, camera.position.z + 10,
+    )
+    var spotLight2 = new THREE.SpotLight(0xffffff, 0.3);
+    spotLight.position.set(
+      camera.position.x - 10, camera.position.y - 10, camera.position.z - 10,
+    )
+    scene.add(spotLight, spotLight2);
+
+    var protonGeometry = new THREE.SphereGeometry(0.1, 64, 64);
+    var neutronGeometry = new THREE.SphereGeometry(0.1, 64, 64);
+
+    var onesGeometry = new THREE.SphereGeometry(0.6, 32, 32);
+    var twosGeometry = new THREE.SphereGeometry(3, 64, 64);
+
+    let texture = new THREE.CanvasTexture(new FlakesTexture());
+    texture.wrapS = THREE.RepeatWrapping;
+    texture.wrapT = THREE.RepeatWrapping;
+    texture.repeat.x = 10;
+    texture.repeat.y = 6;
+
+    var pMaterial = new THREE.MeshPhysicalMaterial({
+      color: 0X8418ca,
+      clearcoat: 1.0,
+      clearcoatRoughness: 0.1,
+      metalness: 0.01,
+      roughness: 0.5,
+      normalMap: texture,
+      normalScale: new THREE.Vector2(0.1, 0.1),
+      side: THREE.DoubleSide,
+    });
+
+    var nMaterial = new THREE.MeshPhysicalMaterial({
+      color: 0X9840,
+      clearcoat: 1.0,
+      clearcoatRoughness: 0.1,
+      metalness: 0.01,
+      roughness: 0.5,
+      normalMap: texture,
+      normalScale: new THREE.Vector2(0.1, 0.1),
+      side: THREE.DoubleSide,
+    });
+
+    var eMaterial = new THREE.MeshPhysicalMaterial({
+      color: 0Xff5050,
+      clearcoat: 1.0,
+      clearcoatRoughness: 0.1,
+      metalness: 0.1,
+      roughness: 0.5,
+      normalMap: texture,
+      normalScale: new THREE.Vector2(0.1, 0.1),
+      side: THREE.DoubleSide,
+    });
+
+    var onesMaterial = new THREE.MeshPhysicalMaterial({
+      color: 0Xffff99,
+      transparent: true,
+      opacity: 0.5
+    });
+
+    var twosMaterial = new THREE.MeshPhysicalMaterial({
+      color: 0X99c2ff,
+      transparent: true,
+      opacity: 0.15
+    });
+
+    var nucleus = new THREE.Group();
+    var electronGroup1s = new THREE.Group();
+    var electronGroup2s = new THREE.Group();
+
+    function createElectron(material, radius, count, group) {
+      var electronGeometry = new THREE.SphereGeometry(0.1, 16, 8);
+
+      for (let i = 0; i < count; i++) {
+        var electron = new THREE.Mesh(electronGeometry, material);
+        var angle = (i / count) * Math.PI * 2;
+        electron.myName = "el" + i;
+        electron.position.set(Math.cos(angle) * radius, Math.sin(angle) * radius, 0);
+        group.add(electron);
+      }
+    }
+
+    function createProtons() {
+      for (let i = 0; i < 8; i++) {
+        var proton = new THREE.Mesh(protonGeometry, pMaterial);
+        var angle = (i / 8) * Math.PI * 2;
+        var radiusp = 0.4;
+        proton.position.set(Math.cos(angle) * radiusp, Math.sin(angle) * radiusp, 0);
+        proton.myName = "p" + i;
+        nucleus.add(proton);
+      }
+    }
+    createProtons();
+    createNeutrons();
+
+    createElectron(eMaterial, 1.5, 2, electronGroup1s);
+    createElectron(eMaterial, 3, 8, electronGroup2s);
+
+        function animate() {
+            requestAnimationFrame(animate);
+            renderer.render(scene, camera);
+        }
+
+        // Initialize and start animation
+        init();
+        animate();
+    </script>
+</body>
+
+</html>
