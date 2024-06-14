@@ -1,3 +1,7 @@
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 <!-- <app-my-component *ngIf="currentComponent === 'my-component'"></app-my-component> -->
 <!-- <app-circle *ngIf="currentComponent === 'circle-component'"></app-circle> -->
 <app-sphere *ngIf="currentComponent === 'sphere-component'"></app-sphere>
@@ -12,12 +16,12 @@
   <div class="container">
 
     
-    <div class="text-box">
+    <div>
       <!-- <div class="heading">The Flow of Learning</div> -->
-      <div class="button-wrapper">
+      <div>
         <!-- <div class="button" (click)="switchToCircleComponent()">Circle</div> -->
-        <button ejs-button class="button a" (click)="switchToSphereComponent()"> <a>Atom</a></button>
-        <button ejs-button class="button a"><a href="https://shikshaa.my.canva.site/e-learning"
+        <button mat-raised-button color="accent" (click)="switchToSphereComponent()"> <a>ATOM</a></button>
+        <button mat-raised-button color="primary"><a href="https://shikshaa.my.canva.site/e-learning"
             target="_blank">PRESENTATION</a></button>
       </div>
     </div>

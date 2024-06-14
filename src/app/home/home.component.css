@@ -11,6 +11,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
   }
   
   .container {
@@ -32,8 +33,6 @@
     top:0;
     left:0;
     z-index: -1;
-    
-    
   }
 
   #youtube {
@@ -52,8 +51,6 @@
     justify-content:flex-end;
     align-items:center;
     opacity: 100%;
-    font-size: 60px;
-    font-family: 'Raleway', sans-serif;
     letter-spacing: 7px;
     word-spacing: 12px;
     text-transform: uppercase;
@@ -68,19 +65,7 @@
     padding: 20px;
     flex-direction: row;
   }
-  .button {
-    display: inline-block;
-    font-size: 1vw;
-    /* font-weight: bold; */
-    padding: 15px;
-    margin-left:20px;
-    margin-right:20px;
-    word-spacing: normal;
-    letter-spacing: 5px;
-    border: 1px solid white;
-    background: black;
-    cursor: pointer;
-  }
+
 
   .backbutton {
     font-size: 4vw;
